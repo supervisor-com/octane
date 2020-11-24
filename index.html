@@ -120,10 +120,25 @@
       console.log("Typed Arrays not supported");
       document.getElementById("alertbox").style.display="block";
     }
+
+/*
     if (window.document.URL.indexOf('skip_zlib=1') >= 0)
       skipBenchmarks.push("zlib");
     if (window.document.URL.indexOf('auto=1') >= 0)
       Run();
+*/
+    const urlParams = new URLSearchParams(window.location.search);
+    const skipString = urlParams.get('skip');
+
+    if (skipString) {
+      skipBenchmarks = skipString.split(",");
+    } else {
+      benchmarks = [
+        "Richards", "DeltaBlue", "Crypto", "RayTrace", "EarleyBoyer", "RegExp", "Splay", "SplayLatency", "NavierStokes", "PdfJS", "Mandreel", "Gameboy","CodeLoad","Box2D","zlib","TypeScript"]
+      window.location.href = "?skip=" + benchmarks.join(",")
+    }
+
+    Run();
   }
 
   function Load() {
